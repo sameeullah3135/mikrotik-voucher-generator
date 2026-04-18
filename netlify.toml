@@ -1,0 +1,21 @@
+[build]
+  command = "npm install"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Functions configuration (for serverless)
+[functions]
+  node_bundler = "esbuild"
+
+# Redirects for SPA
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

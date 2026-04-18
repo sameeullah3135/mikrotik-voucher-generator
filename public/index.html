@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MikroTik Voucher Generator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .status {
+            background: #10b981;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+        }
+        .api-info {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎫 MikroTik Voucher Generator</h1>
+        <p>Multi-router voucher management system for Hotspot</p>
+        
+        <div class="status" id="status">
+            🔄 Checking API Status...
+        </div>
+
+        <h3>✨ Features:</h3>
+        <ul class="feature-list">
+            <li>Multi-router support (v6 & v7)</li>
+            <li>JWT Authentication with roles</li>
+            <li>Bulk voucher generation</li>
+            <li>PDF/CSV export</li>
+            <li>Printable templates (Thermal/A4)</li>
+            <li>Encrypted credentials in MongoDB</li>
+            <li>Voucher history & tracking</li>
+        </ul>
+
+        <button class="btn" onclick="testAPI()">🔌 Test API Connection</button>
+        
+        <div class="api-info">
+            <strong>📡 API Endpoints:</strong><br>
+            POST /api/auth/login - Login<br>
+            GET /api/routers - List routers<br>
+            POST /api/vouchers/generate - Generate vouchers<br>
+            GET /api/vouchers/export/csv - Export to CSV
+        </div>
+        
+        <div class="footer">
+            <p>MikroTik Voucher Generator v1.0 | Ready for deployment</p>
+        </div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '🔄 Testing API Connection...';
+            statusDiv.style.background = '#f59e0b';
+            
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                statusDiv.innerHTML = '✅ API Server is Running!';
+                statusDiv.style.background = '#10b981';
+                alert('✅ API is working!\nStatus: ' + data.status + '\nTime: ' + new Date(data.timestamp).toLocaleString());
+            } catch (error) {
+                statusDiv.innerHTML = '⚠️ API Server is running but health check failed';
+                statusDiv.style.background = '#ef4444';
+                alert('⚠️ API is running but health check endpoint not responding\nCheck if server is properly configured');
+            }
+        }
+        
+        // Check API on page load
+        testAPI();
+    </script>
+</body>
+</html>
