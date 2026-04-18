@@ -57,3 +57,7 @@ npm start
 ## License
 
 MIT
+
+![Node.js Version](https://img.shields.io/badge/node-14%2B-green)
+![MongoDB](https://img.shields.io/badge/MongoDB-4.4%2B-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
